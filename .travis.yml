@@ -12,7 +12,13 @@ matrix:
   allow_failures:
     - go: tip
   fast_finish: true
+env:
+  - PROPER_PATH=gopath/src/github.com/gohugoio/hugo
 install:
+  - mkdir -p $HOME/$PROPER_PATH
+  - rsync -az ${TRAVIS_BUILD_DIR}/ $HOME/${PROPER_PATH}/
+  - export TRAVIS_BUILD_DIR=$HOME/$PROPER_PATH
+  - cd $TRAVIS_BUILD_DIR
   - go get github.com/magefile/mage
   - mage vendor
 script:
